@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tebakin</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#111" />
+</head>
+<body>
+  <div class="game-container">
+    <header>
+      <h1>Tebakin <span class="threeD">3D Pro+</span></h1>
+      <div class="toggles">
+        <button id="toggle-theme">🌗</button>
+        <button id="toggle-mode">🔄 Mode</button>
+        <button id="toggle-music">🎵</button>
+      </div>
+      <div class="level-picker">
+        <label for="level-select">🎯 Pilih Level:</label>
+        <select id="level-select"></select>
+      </div>
+    </header>
+
+    <main>
+      <div class="image-3d">
+        <img id="game-image" class="blur" src="" alt="Gambar Soal" />
+      </div>
+
+      <div id="text-input-area">
+        <input type="text" id="answer-input" placeholder="Ketik jawaban..." />
+        <button id="submit-answer">Jawab</button>
+      </div>
+
+      <div class="options" id="options"></div>
+
+      <div class="status">
+        <span>❤️: <b id="lives">3</b></span>
+        <span>⏱️: <b id="timer">15</b> detik</span>
+        <span>🏅 Level: <b id="level">1</b></span>
+        <span>💯 Skor: <b id="score">0</b></span>
+      </div>
+
+      <div class="actions">
+        <button id="hint">💡 Hint</button>
+        <button id="next">➡️ Lanjut</button>
+      </div>
+
+      <div class="leaderboard">
+        <h2>🏆 Papan Skor</h2>
+        <p>Skor Tertinggi: <b id="highscore">0</b></p>
+        <p>Total Bermain: <span id="totalPlayed">0</span></p>
+        <p>Akurasi: <span id="accuracy">0</span>%</p>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Tebakin by FASIM</p>
+    </footer>
+  </div>
+
+  <!-- Popup -->
+  <div id="popup" class="popup hidden">
+    <div class="popup-content">
+      <p id="popup-text"></p>
+      <button id="popup-close">Tutup</button>
+    </div>
+  </div>
+
+  <!-- Preload Audio -->
+  <audio id="audio-correct" src="audio/correct.mp3" preload="auto"></audio>
+  <audio id="audio-wrong" src="audio/wrong.mp3" preload="auto"></audio>
+  <audio id="audio-popup" src="audio/popup.mp3" preload="auto"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
