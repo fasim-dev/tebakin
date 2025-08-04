@@ -4,9 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tebakin - Game Tebak Gambar Edukatif 3D</title>
-  <meta name="description" content="Tebakin adalah game tebak gambar edukatif berbasis gambar 3D dan suara." />
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="manifest" href="manifest.json" />
+  <meta name="description" content="Game tebak gambar edukatif interaktif 3D. Tebakin aja dulu!" />
+  <link rel="stylesheet" href="style.css" />
   <meta name="theme-color" content="#dc2743" />
 </head>
 <body>
@@ -35,11 +34,8 @@
       <div class="options" id="options"></div>
 
       <div class="status-bar single-line">
-        ❤️ <b id="lives">3</b>
-        ⏱️ <b id="timer">15</b> detik
-        🏅 Level: <b id="level">1</b>
-        💯 Skor: <b id="score">0</b>
-        🪙 Koin: <b id="coins">0</b>
+        ❤️ <b id="lives">3</b> ⏱️ <b id="timer">15</b> detik 🏅 Level: <b id="level">1</b>
+        💯 Skor: <b id="score">0</b> 🪙 Koin: <b id="coins">0</b>
       </div>
 
       <div class="actions">
@@ -77,19 +73,19 @@
 
     <footer>
       <nav class="main-nav">
-        <a href="pages/about.html">Tentang</a> |
-        <a href="pages/privacy.html">Privasi</a> |
-        <a href="pages/contact.html">Kontak</a>
+        <a href="#">Tentang</a> |
+        <a href="#">Privasi</a> |
+        <a href="#">Kontak</a>
       </nav>
       <p>&copy; 2025 Tebakin by FASIM</p>
     </footer>
   </div>
 
   <!-- 🔊 AUDIO -->
-  <audio id="audio-click" src="audio/click.mp3" preload="auto"></audio>
-  <audio id="audio-wrong" src="audio/wrong.mp3" preload="auto"></audio>
-  <audio id="bgm" src="audio/bgm.mp3" preload="auto" loop></audio>
+  <audio id="audio-click" src="click.mp3" preload="auto"></audio>
+  <audio id="audio-wrong" src="wrong.mp3" preload="auto"></audio>
+  <audio id="bgm" src="bgm.mp3" preload="auto" loop></audio>
 
-  <script src="js/script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
