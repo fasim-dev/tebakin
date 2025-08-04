@@ -1,184 +1,166 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const gameImage = document.getElementById('game-image');
-  const answerInput = document.getElementById('answer-input');
-  const submitBtn = document.getElementById('submit-answer');
-  const hintBtn = document.getElementById('hint');
-  const nextBtn = document.getElementById('next');
-  const optionsDiv = document.getElementById('options');
-  const livesDisplay = document.getElementById('lives');
-  const timerDisplay = document.getElementById('timer');
-  const levelDisplay = document.getElementById('level');
-  const scoreDisplay = document.getElementById('score');
-  const highscoreDisplay = document.getElementById('highscore');
-  const totalPlayedDisplay = document.getElementById('totalPlayed');
-  const accuracyDisplay = document.getElementById('accuracy');
-  const popup = document.getElementById('popup');
-  const popupText = document.getElementById('popup-text');
-  const popupClose = document.getElementById('popup-close');
-  const levelSelect = document.getElementById('level-select');
+let currentLevel = 0;
+let currentQuestion = 0;
+let score = 0;
+let lives = 3;
+let coins = 0;
+let timer;
+let timeLeft = 15;
+let soundOn = true;
+let soal = [];
 
-  // Audio elements
-  const audioCorrect = document.getElementById('audio-correct');
-  const audioWrong = document.getElementById('audio-wrong');
-  const audioPopup = document.getElementById('audio-popup');
+// AUDIO
+const audioClick = document.getElementById("audio-click");
+const audioWrong = document.getElementById("audio-wrong");
+const bgm = document.getElementById("bgm");
 
-  let allLevels = [];
-  let currentLevel = 0;
-  let questions = [];
-  let currentIndex = 0;
-  let score = 0;
-  let lives = 3;
-  let correct = 0;
-  let total = 0;
-  let timer;
+// ELEMENTS
+const image = document.getElementById("game-image");
+const input = document.getElementById("answer-input");
+const submitBtn = document.getElementById("submit-answer");
+const optionsDiv = document.getElementById("options");
+const livesEl = document.getElementById("lives");
+const timerEl = document.getElementById("timer");
+const levelEl = document.getElementById("level");
+const scoreEl = document.getElementById("score");
+const coinsEl = document.getElementById("coins");
+const popup = document.getElementById("popup");
+const popupText = document.getElementById("popup-text");
+const popupClose = document.getElementById("popup-close");
 
-  function showPopup(message) {
-    popupText.textContent = message;
-    popup.classList.remove('hidden');
-    if (audioPopup) audioPopup.play();
+function playSound(audio) {
+  if (soundOn) {
+    audio.currentTime = 0;
+    audio.play();
   }
+}
 
-  popupClose.addEventListener('click', () => {
-    popup.classList.add('hidden');
-  });
+function showPopup(message) {
+  popupText.textContent = message;
+  popup.classList.remove("hidden");
+  popup.classList.add("popup");
+  playSound(audioClick);
+}
 
-  function startTimer() {
-    clearInterval(timer);
-    let time = 15;
-    timerDisplay.textContent = time;
-    timer = setInterval(() => {
-      time--;
-      timerDisplay.textContent = time;
-      if (time <= 0) {
-        clearInterval(timer);
-        loseLife("⏱️ Waktu habis!");
-      }
-    }, 1000);
-  }
-
-  function loseLife(message) {
-    lives--;
-    updateStatus();
-    if (audioWrong) audioWrong.play();
-    if (lives <= 0) {
-      showPopup("💀 Game Over! Skor kamu: " + score);
-    } else {
-      showPopup(message);
-      setTimeout(() => loadQuestion(), 1000);
-    }
-  }
-
-  function updateStatus() {
-    livesDisplay.textContent = lives;
-    scoreDisplay.textContent = score;
-    levelDisplay.textContent = currentLevel + 1;
-    highscoreDisplay.textContent = Math.max(score, Number(highscoreDisplay.textContent));
-    totalPlayedDisplay.textContent = total;
-    accuracyDisplay.textContent = total ? Math.round((correct / total) * 100) : 0;
-  }
-
-  function handleAnswer(answer, btn, q) {
-    clearInterval(timer);
-    total++;
-    const isCorrect = answer.toLowerCase() === q.answer.toLowerCase();
-    if (isCorrect) {
-      score += 10;
-      correct++;
-      if (btn) btn.classList.add("correct");
-      gameImage.classList.remove("blur");
-      if (audioCorrect) audioCorrect.play();
-      showPopup(`✅ Benar! Jawabannya: ${q.answer}\n\n📘 Fakta: ${q.fact}`);
-    } else {
-      if (btn) btn.classList.add("wrong");
-      loseLife("❌ Salah! Jawabannya: " + q.answer);
-      return;
-    }
-    currentIndex++;
-    updateStatus();
-    setTimeout(() => loadQuestion(), 1500);
-  }
-
-  function loadQuestion() {
-    if (currentIndex >= questions.length) {
-      showPopup("✔️ Level selesai! Skor akhir: " + score);
-      return;
-    }
-
-    const q = questions[currentIndex];
-    gameImage.src = q.image;
-    gameImage.classList.add("blur");
-    answerInput.value = "";
-    optionsDiv.innerHTML = "";
-
-    const opts = shuffleArray([q.answer, ...generateFakes(q.answer)]);
-    const finalOptions = shuffleArray(q.options || opts.slice(0, 4));
-
-    finalOptions.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.textContent = opt;
-      btn.onclick = () => handleAnswer(opt, btn, q);
-      optionsDiv.appendChild(btn);
-    });
-
-    startTimer();
-    updateStatus();
-  }
-
-  function generateFakes(correct) {
-    const all = ["apel", "jeruk", "pisang", "semangka", "anggur", "ikan", "ular", "burung", "gajah", "harimau"];
-    return shuffleArray(all.filter(item => item !== correct)).slice(0, 3);
-  }
-
-  function shuffleArray(arr) {
-    return arr.sort(() => Math.random() - 0.5);
-  }
-
-  submitBtn.addEventListener('click', () => {
-    const input = answerInput.value.trim();
-    if (!input) return;
-    const q = questions[currentIndex];
-    handleAnswer(input, null, q);
-  });
-
-  hintBtn.addEventListener('click', () => {
-    const q = questions[currentIndex];
-    if (q && q.hints) {
-      showPopup("💡 Hint:\n" + q.hints.join(" ➜ "));
-    }
-  });
-
-  nextBtn.addEventListener('click', () => {
-    currentIndex++;
-    loadQuestion();
-  });
-
-  levelSelect.addEventListener('change', () => {
-    currentLevel = parseInt(levelSelect.value);
-    currentIndex = 0;
-    score = 0;
-    lives = 3;
-    correct = 0;
-    total = 0;
-    questions = [...allLevels[currentLevel]];
-    loadQuestion();
-  });
-
-  fetch('soal.json')
-    .then(res => res.json())
-    .then(data => {
-      allLevels = data;
-      levelSelect.innerHTML = '';
-      allLevels.forEach((_, i) => {
-        const opt = document.createElement('option');
-        opt.value = i;
-        opt.textContent = `Level ${i + 1}`;
-        levelSelect.appendChild(opt);
-      });
-      questions = [...allLevels[currentLevel]];
-      loadQuestion();
-    })
-    .catch(err => {
-      console.error("Gagal memuat soal.json", err);
-      showPopup("❌ Gagal memuat soal. Pastikan file soal.json tersedia.");
-    });
+popupClose.addEventListener("click", () => {
+  popup.classList.add("hidden");
 });
+
+document.getElementById("toggle-sound").onclick = () => {
+  soundOn = !soundOn;
+  showPopup(`Suara ${soundOn ? "Aktif" : "Nonaktif"}`);
+  if (soundOn) bgm.play(); else bgm.pause();
+};
+
+document.getElementById("hint").onclick = () => {
+  const hints = soal[currentLevel][currentQuestion].hints;
+  showPopup("Hint: " + hints.join(", "));
+};
+
+document.getElementById("next").onclick = () => {
+  nextQuestion();
+};
+
+document.getElementById("toggle-theme").onclick = () => {
+  document.body.classList.toggle("dark");
+};
+
+submitBtn.onclick = () => {
+  const answer = input.value.trim().toLowerCase();
+  const correct = soal[currentLevel][currentQuestion].answer.toLowerCase();
+
+  if (answer === correct) {
+    score += 10;
+    coins += 2;
+    showPopup("✅ Benar! 🎉\nFakta: " + soal[currentLevel][currentQuestion].fact);
+    nextQuestion();
+  } else {
+    lives--;
+    showPopup("❌ Salah! Jawaban benar: " + correct);
+    playSound(audioWrong);
+    if (lives <= 0) {
+      showPopup("😢 Game Over!\nSkor Akhir: " + score);
+      resetGame();
+    }
+  }
+
+  updateStatus();
+};
+
+function updateStatus() {
+  livesEl.textContent = lives;
+  timerEl.textContent = timeLeft;
+  scoreEl.textContent = score;
+  coinsEl.textContent = coins;
+  levelEl.textContent = currentLevel + 1;
+}
+
+function startTimer() {
+  clearInterval(timer);
+  timeLeft = 15;
+  timer = setInterval(() => {
+    timeLeft--;
+    timerEl.textContent = timeLeft;
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      showPopup("⏰ Waktu Habis!");
+      lives--;
+      updateStatus();
+      if (lives <= 0) {
+        showPopup("😢 Game Over!");
+        resetGame();
+      } else {
+        nextQuestion();
+      }
+    }
+  }, 1000);
+}
+
+function nextQuestion() {
+  currentQuestion++;
+  if (currentQuestion >= soal[currentLevel].length) {
+    currentLevel++;
+    currentQuestion = 0;
+    if (currentLevel >= soal.length) {
+      showPopup("🎉 Semua level selesai!\nSkor Akhir: " + score);
+      resetGame();
+      return;
+    }
+  }
+  loadQuestion();
+}
+
+function loadQuestion() {
+  const q = soal[currentLevel][currentQuestion];
+  image.src = q.image;
+  input.value = "";
+  input.focus();
+  optionsDiv.innerHTML = "";
+  startTimer();
+  updateStatus();
+}
+
+function resetGame() {
+  currentLevel = 0;
+  currentQuestion = 0;
+  score = 0;
+  lives = 3;
+  coins = 0;
+  loadQuestion();
+}
+
+async function loadSoal() {
+  try {
+    const res = await fetch("soal.json");
+    soal = await res.json();
+    loadQuestion();
+    if (soundOn) bgm.play();
+  } catch (err) {
+    showPopup("⚠️ Gagal memuat soal.json");
+    console.error(err);
+  }
+}
+
+window.onload = () => {
+  loadSoal();
+  updateStatus();
+};
