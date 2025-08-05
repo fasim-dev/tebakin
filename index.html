@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,72 +19,67 @@
         <button id="share-score-btn">📤</button>
       </div>
     </header>
-
     <main>
       <div class="image-3d">
         <img id="game-image" src="" alt="Gambar Soal" class="blur" />
-      </div>
-
-      <div id="text-input-area">
-        <input type="text" id="answer-input" placeholder="Ketik jawaban..." />
-        <button id="submit-answer">Jawab</button>
-      </div>
-
-      <div class="options" id="options"></div>
-
-      <div class="status-bar single-line">
-        ❤️ <b id="lives">3</b> ⏱️ <b id="timer">15</b> detik 🏅 Level: <b id="level">1</b>
-        💯 Skor: <b id="score">0</b> 🪙 Koin: <b id="coins">0</b>
-      </div>
-
-      <div class="actions">
-        <button id="hint">💡 Hint</button>
-        <button id="next">➡️ Lanjut</button>
-      </div>
-
-      <div class="leaderboard">
-        <h2>🏆 Papan Skor</h2>
-        <p>Skor Tertinggi: <b id="highscore">0</b></p>
-        <p>Total Bermain: <span id="totalPlayed">0</span></p>
-        <p>Akurasi: <span id="accuracy">0</span>%</p>
-      </div>
-
-      <div class="badges">
-        <h2>🎖 Badge Pencapaian</h2>
-        <div id="badge-list"></div>
-      </div>
-
-      <div class="stats">
-        <h2>📊 Statistik Kamu</h2>
-        <p>Total Main: <span id="stat-played">0</span></p>
-        <p>Benar: <span id="stat-correct">0</span></p>
-        <p>Salah: <span id="stat-wrong">0</span></p>
-        <p>Akurasi: <span id="stat-accuracy">0</span>%</p>
-      </div>
-    </main>
-
-    <div id="popup" class="popup hidden">
-      <div class="popup-content">
-        <p id="popup-text"></p>
-        <button id="popup-close">OK</button>
-      </div>
-    </div>
-
-    <footer>
-      <nav class="main-nav">
-        <a href="#">Tentang</a> |
-        <a href="#">Privasi</a> |
-        <a href="#">Kontak</a>
-      </nav>
-      <p>&copy; 2025 Tebakin by FASIM</p>
-    </footer>
+      </div><div id="text-input-area">
+    <input type="text" id="answer-input" placeholder="Ketik jawaban..." />
+    <button id="submit-answer">Jawab</button>
   </div>
 
-  <!-- 🔊 AUDIO -->
-  <audio id="audio-click" src="click.mp3" preload="auto"></audio>
-  <audio id="audio-wrong" src="wrong.mp3" preload="auto"></audio>
-  <audio id="bgm" src="bgm.mp3" preload="auto" loop></audio>
+  <div class="options" id="options"></div>
 
-  <script src="script.js"></script>
-</body>
+  <div class="status-bar single-line">
+    ❤️ <b id="lives">3</b>
+    ⏱️ <b id="timer">15</b> detik
+    🏅 Level: <b id="level">1</b>
+    💯 Skor: <b id="score">0</b>
+    🪙 Koin: <b id="coins">0</b>
+  </div>
+
+  <div class="actions">
+    <button id="hint">💡 Hint</button>
+    <button id="next">➡️ Lanjut</button>
+  </div>
+
+  <div class="leaderboard">
+    <h2>🏆 Papan Skor</h2>
+    <p>Skor Tertinggi: <b id="highscore">0</b></p>
+    <p>Total Bermain: <span id="totalPlayed">0</span></p>
+    <p>Akurasi: <span id="accuracy">0</span>%</p>
+  </div>
+
+  <div class="badges">
+    <h2>🎖 Badge Pencapaian</h2>
+    <div id="badge-list"></div>
+  </div>
+
+  <div class="stats">
+    <h2>📊 Statistik Kamu</h2>
+    <p>Total Main: <span id="stat-played">0</span></p>
+    <p>Benar: <span id="stat-correct">0</span></p>
+    <p>Salah: <span id="stat-wrong">0</span></p>
+    <p>Akurasi: <span id="stat-accuracy">0</span>%</p>
+  </div>
+</main>
+
+<div id="popup" class="popup hidden">
+  <div class="popup-content">
+    <p id="popup-text"></p>
+    <button id="popup-close">OK</button>
+  </div>
+</div>
+
+<footer>
+  <nav class="main-nav">
+    <a href="#">Tentang</a> |
+    <a href="#">Privasi</a> |
+    <a href="#">Kontak</a>
+  </nav>
+  <p>&copy; 2025 Tebakin by FASIM</p>
+</footer>
+
+  </div>  <!-- 🔊 AUDIO LENGKAP --><audio id="audio-click" src="click.mp3" preload="auto"></audio> <audio id="audio-wrong" src="wrong.mp3" preload="auto"></audio> <audio id="audio-correct" src="correct.mp3" preload="auto"></audio> <audio id="audio-timer" src="timer.mp3" preload="auto"></audio> <audio id="audio-popup" src="popup.mp3" preload="auto"></audio> <audio id="audio-levelup" src="levelup.mp3" preload="auto"></audio> <audio id="bgm" src="bgm.mp3" preload="auto" loop></audio>
+
+  <script src="script.js"></script></body>
 </html>
