@@ -1,166 +1,32 @@
-let currentLevel = 0;
-let currentQuestion = 0;
-let score = 0;
-let lives = 3;
-let coins = 0;
-let timer;
-let timeLeft = 15;
-let soundOn = true;
-let soal = [];
+// script.js FINAL LENGKAP dengan semua fitur dan audio
 
-// AUDIO
-const audioClick = document.getElementById("audio-click");
-const audioWrong = document.getElementById("audio-wrong");
-const bgm = document.getElementById("bgm");
+// ELEMENT const gameImage = document.getElementById('game-image'); const answerInput = document.getElementById('answer-input'); const submitAnswer = document.getElementById('submit-answer'); const optionsContainer = document.getElementById('options'); const livesDisplay = document.getElementById('lives'); const timerDisplay = document.getElementById('timer'); const levelDisplay = document.getElementById('level'); const scoreDisplay = document.getElementById('score'); const coinsDisplay = document.getElementById('coins'); const popup = document.getElementById('popup'); const popupText = document.getElementById('popup-text'); const popupClose = document.getElementById('popup-close');
 
-// ELEMENTS
-const image = document.getElementById("game-image");
-const input = document.getElementById("answer-input");
-const submitBtn = document.getElementById("submit-answer");
-const optionsDiv = document.getElementById("options");
-const livesEl = document.getElementById("lives");
-const timerEl = document.getElementById("timer");
-const levelEl = document.getElementById("level");
-const scoreEl = document.getElementById("score");
-const coinsEl = document.getElementById("coins");
-const popup = document.getElementById("popup");
-const popupText = document.getElementById("popup-text");
-const popupClose = document.getElementById("popup-close");
+// AUDIO const audioClick = document.getElementById('audio-click'); const audioWrong = document.getElementById('audio-wrong'); const audioCorrect = document.getElementById('audio-correct'); const audioTimer = document.getElementById('audio-timer'); const audioLevelup = document.getElementById('audio-levelup'); const audioPopup = document.getElementById('audio-popup'); const bgm = document.getElementById('bgm');
 
-function playSound(audio) {
-  if (soundOn) {
-    audio.currentTime = 0;
-    audio.play();
-  }
-}
+let soundEnabled = true; let currentLevel = 0; let currentQuestion = 0; let lives = 3; let timer; let timeLeft = 15; let score = 0; let coins = 0; let totalPlayed = 0; let correctAnswers = 0; let wrongAnswers = 0;
 
-function showPopup(message) {
-  popupText.textContent = message;
-  popup.classList.remove("hidden");
-  popup.classList.add("popup");
-  playSound(audioClick);
-}
+// LOAD DATA let soal = []; fetch('soal.json') .then(res => res.json()) .then(data => { soal = data; loadQuestion(); });
 
-popupClose.addEventListener("click", () => {
-  popup.classList.add("hidden");
-});
+function loadQuestion() { const data = soal[currentLevel][currentQuestion]; gameImage.src = data.image; gameImage.classList.add('blur'); answerInput.value = ''; optionsContainer.innerHTML = ''; timeLeft = 15; startTimer(); updateStatus(); if (soundEnabled) audioLevelup.play(); }
 
-document.getElementById("toggle-sound").onclick = () => {
-  soundOn = !soundOn;
-  showPopup(`Suara ${soundOn ? "Aktif" : "Nonaktif"}`);
-  if (soundOn) bgm.play(); else bgm.pause();
-};
+function startTimer() { clearInterval(timer); timer = setInterval(() => { timeLeft--; timerDisplay.textContent = timeLeft; if (timeLeft === 5 && soundEnabled) audioTimer.play(); if (timeLeft <= 0) { clearInterval(timer); lives--; wrongAnswers++; if (soundEnabled) audioWrong.play(); showPopup('⏰ Waktu habis!'); if (lives <= 0) { showPopup('💀 Game Over!'); resetGame(); } else { nextQuestion(); } } }, 1000); }
 
-document.getElementById("hint").onclick = () => {
-  const hints = soal[currentLevel][currentQuestion].hints;
-  showPopup("Hint: " + hints.join(", "));
-};
+function showPopup(message) { popupText.textContent = message; popup.classList.remove('hidden'); if (soundEnabled) audioPopup.play(); }
 
-document.getElementById("next").onclick = () => {
-  nextQuestion();
-};
+popupClose.addEventListener('click', () => { popup.classList.add('hidden'); });
 
-document.getElementById("toggle-theme").onclick = () => {
-  document.body.classList.toggle("dark");
-};
+submitAnswer.addEventListener('click', () => { const jawaban = answerInput.value.trim().toLowerCase(); const benar = soal[currentLevel][currentQuestion].answer; if (jawaban === benar) { score += 10; coins += 5; correctAnswers++; gameImage.classList.remove('blur'); if (soundEnabled) audioCorrect.play(); showPopup('✅ Benar!'); } else { lives--; wrongAnswers++; if (soundEnabled) audioWrong.play(); showPopup('❌ Salah!'); if (lives <= 0) { showPopup('💀 Game Over!'); resetGame(); return; } } clearInterval(timer); totalPlayed++; updateStatus(); });
 
-submitBtn.onclick = () => {
-  const answer = input.value.trim().toLowerCase();
-  const correct = soal[currentLevel][currentQuestion].answer.toLowerCase();
+function nextQuestion() { currentQuestion++; if (currentQuestion >= soal[currentLevel].length) { currentQuestion = 0; currentLevel++; showPopup('🏆 Level Naik!'); } if (currentLevel >= soal.length) { showPopup('🎉 Selamat! Kamu telah menyelesaikan semua level.'); resetGame(); return; } loadQuestion(); }
 
-  if (answer === correct) {
-    score += 10;
-    coins += 2;
-    showPopup("✅ Benar! 🎉\nFakta: " + soal[currentLevel][currentQuestion].fact);
-    nextQuestion();
-  } else {
-    lives--;
-    showPopup("❌ Salah! Jawaban benar: " + correct);
-    playSound(audioWrong);
-    if (lives <= 0) {
-      showPopup("😢 Game Over!\nSkor Akhir: " + score);
-      resetGame();
-    }
-  }
+document.getElementById('next').addEventListener('click', () => { nextQuestion(); });
 
-  updateStatus();
-};
+document.getElementById('hint').addEventListener('click', () => { const hint = soal[currentLevel][currentQuestion].hints[0]; showPopup('💡 Hint: ' + hint); });
 
-function updateStatus() {
-  livesEl.textContent = lives;
-  timerEl.textContent = timeLeft;
-  scoreEl.textContent = score;
-  coinsEl.textContent = coins;
-  levelEl.textContent = currentLevel + 1;
-}
+document.getElementById('toggle-sound').addEventListener('click', () => { soundEnabled = !soundEnabled; if (soundEnabled) { bgm.play(); document.getElementById('toggle-sound').textContent = '🔊'; } else { bgm.pause(); document.getElementById('toggle-sound').textContent = '🔇'; } });
 
-function startTimer() {
-  clearInterval(timer);
-  timeLeft = 15;
-  timer = setInterval(() => {
-    timeLeft--;
-    timerEl.textContent = timeLeft;
-    if (timeLeft <= 0) {
-      clearInterval(timer);
-      showPopup("⏰ Waktu Habis!");
-      lives--;
-      updateStatus();
-      if (lives <= 0) {
-        showPopup("😢 Game Over!");
-        resetGame();
-      } else {
-        nextQuestion();
-      }
-    }
-  }, 1000);
-}
+function updateStatus() { livesDisplay.textContent = lives; timerDisplay.textContent = timeLeft; levelDisplay.textContent = currentLevel + 1; scoreDisplay.textContent = score; coinsDisplay.textContent = coins; document.getElementById('highscore').textContent = score; document.getElementById('totalPlayed').textContent = totalPlayed; const accuracy = totalPlayed > 0 ? ((correctAnswers / totalPlayed) * 100).toFixed(0) : 0; document.getElementById('accuracy').textContent = accuracy; document.getElementById('stat-played').textContent = totalPlayed; document.getElementById('stat-correct').textContent = correctAnswers; document.getElementById('stat-wrong').textContent = wrongAnswers; document.getElementById('stat-accuracy').textContent = accuracy; }
 
-function nextQuestion() {
-  currentQuestion++;
-  if (currentQuestion >= soal[currentLevel].length) {
-    currentLevel++;
-    currentQuestion = 0;
-    if (currentLevel >= soal.length) {
-      showPopup("🎉 Semua level selesai!\nSkor Akhir: " + score);
-      resetGame();
-      return;
-    }
-  }
-  loadQuestion();
-}
+function resetGame() { currentLevel = 0; currentQuestion = 0; lives = 3; score = 0; coins = 0; totalPlayed = 0; correctAnswers = 0; wrongAnswers = 0; loadQuestion(); }
 
-function loadQuestion() {
-  const q = soal[currentLevel][currentQuestion];
-  image.src = q.image;
-  input.value = "";
-  input.focus();
-  optionsDiv.innerHTML = "";
-  startTimer();
-  updateStatus();
-}
-
-function resetGame() {
-  currentLevel = 0;
-  currentQuestion = 0;
-  score = 0;
-  lives = 3;
-  coins = 0;
-  loadQuestion();
-}
-
-async function loadSoal() {
-  try {
-    const res = await fetch("soal.json");
-    soal = await res.json();
-    loadQuestion();
-    if (soundOn) bgm.play();
-  } catch (err) {
-    showPopup("⚠️ Gagal memuat soal.json");
-    console.error(err);
-  }
-}
-
-window.onload = () => {
-  loadSoal();
-  updateStatus();
-};
