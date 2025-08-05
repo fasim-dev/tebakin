@@ -1,68 +1,321 @@
-/* style.css FINAL UNTUK FOLDER TEBKIN SINGLE-FOLDER VERSI */
-
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
-body { margin: 0; font-family: 'Orbitron', sans-serif; background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); background-size: 400% 400%; animation: gradientBG 15s ease infinite; color: #fff; font-size: 14px; line-height: 1.4; }
+body {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.4;
+}
 
-@keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-.game-container { max-width: 480px; margin: auto; padding: 1rem; backdrop-filter: blur(10px); }
+/* Splash Screen */
+.splash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom right, #dc2743, #cc2366);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  color: white;
+  font-family: 'Orbitron', sans-serif;
+  transition: opacity 1s ease, visibility 1s ease;
+  opacity: 1;
+  visibility: visible;
+}
 
-header { text-align: center; padding: 1rem 0; background: rgba(0, 0, 0, 0.2); border-radius: 0 0 1rem 1rem; margin-bottom: 1rem; box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
+.splash.hide {
+  opacity: 0;
+  visibility: hidden;
+}
 
-header h1 { font-size: 1.7rem; margin: 0; color: #fff; text-shadow: 2px 2px #000; font-weight: 700; }
+.splash-logo {
+  width: 120px;
+  margin-bottom: 1rem;
+}
 
-.threeD { color: #ffd700; font-weight: bold; }
+.splash-title {
+  font-size: 1.8rem;
+  margin: 0;
+}
 
-.toggles { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1rem; }
+.splash-sub {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
 
-.toggles button { background: rgba(255, 255, 255, 0.2); color: #fff; border: none; padding: 0.6rem 1rem; border-radius: 1rem; cursor: pointer; font-size: 0.75rem; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.game-container {
+  max-width: 480px;
+  margin: auto;
+  padding: 1rem;
+  backdrop-filter: blur(10px);
+}
 
-.toggles button:active { transform: scale(0.95); box-shadow: inset 0 0 5px rgba(0,0,0,0.3); }
+header {
+  text-align: center;
+  padding: 1rem 0;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 1rem 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
 
-main { text-align: center; }
+header h1 {
+  font-size: 1.7rem;
+  margin: 0;
+  color: #fff;
+  text-shadow: 2px 2px #000;
+  font-weight: 700;
+}
 
-.image-3d img { width: 80%; max-width: 300px; margin-bottom: 1rem; border-radius: 1.5rem; box-shadow: 0 0 20px rgba(0,0,0,0.3); }
+.threeD {
+  color: #ffd700;
+  font-weight: bold;
+}
 
-#text-input-area { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1rem; }
+.toggles {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
 
-#answer-input { flex: 1; padding: 0.6rem; font-size: 0.9rem; border-radius: 1rem; border: none; font-family: 'Orbitron', sans-serif; }
+.toggles button {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-#submit-answer { background: #fff; color: #dc2743; font-weight: bold; padding: 0.6rem 1rem; border: none; border-radius: 1rem; cursor: pointer; transition: transform 0.2s ease; }
+.toggles button:active {
+  transform: scale(0.95);
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+}
 
-#submit-answer:active { transform: scale(0.95); }
+main {
+  text-align: center;
+}
 
-.options { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-bottom: 1rem; }
+.image-3d img {
+  width: 80%;
+  max-width: 300px;
+  margin-bottom: 1rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
 
-.options button { padding: 0.5rem 1rem; background: #fff; color: #dc2743; border: none; border-radius: 1rem; font-weight: bold; font-size: 0.8rem; cursor: pointer; transition: transform 0.2s ease; }
+#text-input-area {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
 
-.options button:active { transform: scale(0.95); }
+#answer-input {
+  flex: 1;
+  padding: 0.6rem;
+  font-size: 0.9rem;
+  border-radius: 1rem;
+  border: none;
+  font-family: 'Orbitron', sans-serif;
+}
 
-.status-bar.single-line { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5rem; background: rgba(0, 0, 0, 0.3); /* Menyamakan warna seperti leaderboard */ padding: 0.6rem 1rem; border-radius: 1rem; font-size: 0.85rem; font-weight: bold; box-shadow: 0 0 8px rgba(255, 255, 255, 0.1); white-space: nowrap; margin: 1.5rem auto 2rem auto; text-shadow: 0 0 4px #fff; }
+#submit-answer {
+  background: #fff;
+  color: #dc2743;
+  font-weight: bold;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
 
-.status-bar.single-line b { margin: 0 0.25rem 0 0.1rem; }
+#submit-answer:active {
+  transform: scale(0.95);
+}
 
-.actions { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
+#clue-container {
+  margin-bottom: 0.3rem;
+}
 
-.actions button { padding: 0.6rem 1rem; border: none; border-radius: 1rem; font-weight: bold; background: #fff; color: #dc2743; font-size: 0.9rem; cursor: pointer; transition: transform 0.2s ease; }
+#clue-text {
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  display: inline-block;
+}
 
-.actions button:active { transform: scale(0.95); }
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
 
-.leaderboard, .badges, .stats { background: rgba(0, 0, 0, 0.3); padding: 1rem; border-radius: 1rem; margin-top: 1rem; }
+.options button {
+  padding: 0.5rem 1rem;
+  background: #fff;
+  color: #dc2743;
+  border: none;
+  border-radius: 1rem;
+  font-weight: bold;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
 
-.leaderboard h2, .badges h2, .stats h2 { margin-bottom: 0.5rem; }
+.options button:active {
+  transform: scale(0.95);
+}
 
-.badge-icon { width: 40px; margin: 0.25rem; }
+.status-bar.single-line {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.6rem 1rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+  font-weight: bold;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 4px #fff;
+}
 
-.popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; color: #000; padding: 1rem; border-radius: 1rem; z-index: 999; max-width: 300px; width: 90%; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+.status-bar.single-line b {
+  margin: 0 0.25rem 0 0.1rem;
+}
 
-.popup-content { text-align: center; }
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
 
-.popup.hidden { display: none; }
+.actions button {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 1rem;
+  font-weight: bold;
+  background: #fff;
+  color: #dc2743;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
 
-footer { text-align: center; margin-top: 2rem; padding: 1rem 0; font-size: 0.7rem; background: rgba(0,0,0,0.2); border-radius: 1rem 1rem 0 0; color: #fff; text-shadow: 1px 1px #000; font-family: 'Orbitron', sans-serif; }
+.actions button:active {
+  transform: scale(0.95);
+}
 
-.main-nav a { color: #fff; text-decoration: none; margin: 0 0.25rem; }
+.leaderboard, .badges, .stats {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-top: 1rem;
+}
 
-.main-nav a:hover { text-decoration: underline; }
+.leaderboard h2, .badges h2, .stats h2 {
+  margin-bottom: 0.5rem;
+}
 
+.badge-icon {
+  width: 40px;
+  margin: 0.25rem;
+}
+
+/* POPUP Updated to match leaderboard style */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 1rem;
+  border-radius: 1rem;
+  z-index: 999;
+  max-width: 300px;
+  width: 90%;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+  text-align: center;
+  animation: popIn 0.3s ease-in-out;
+  backdrop-filter: blur(8px);
+  font-family: 'Orbitron', sans-serif;
+}
+
+@keyframes popIn {
+  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.popup.hidden {
+  display: none;
+}
+
+#popup-close {
+  background: #fff;
+  color: #dc2743;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+#popup-close:active {
+  transform: scale(0.95);
+}
+
+footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem 0;
+  font-size: 0.7rem;
+  background: rgba(0,0,0,0.2);
+  border-radius: 1rem 1rem 0 0;
+  color: #fff;
+  text-shadow: 1px 1px #000;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.main-nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 0.25rem;
+}
+
+.main-nav a:hover {
+  text-decoration: underline;
+}
