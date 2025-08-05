@@ -38,11 +38,9 @@ main { text-align: center; }
 
 .options button:active { transform: scale(0.95); }
 
-.status-bar.single-line { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5rem; background: linear-gradient(145deg, #d2b48c, #c8a974); padding: 0.6rem 1rem; border-radius: 1rem; font-size: 0.85rem; font-weight: bold; box-shadow: 0 0 12px rgba(255, 255, 255, 0.15), inset 0 0 5px rgba(255, 255, 255, 0.1); white-space: nowrap; margin: 1.5rem auto 2rem auto; text-shadow: 0 0 4px #fff; animation: pulseGlow 2s infinite ease-in-out; }
+.status-bar.single-line { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5rem; background: rgba(0, 0, 0, 0.3); /* Menyamakan warna seperti leaderboard */ padding: 0.6rem 1rem; border-radius: 1rem; font-size: 0.85rem; font-weight: bold; box-shadow: 0 0 8px rgba(255, 255, 255, 0.1); white-space: nowrap; margin: 1.5rem auto 2rem auto; text-shadow: 0 0 4px #fff; }
 
 .status-bar.single-line b { margin: 0 0.25rem 0 0.1rem; }
-
-@keyframes pulseGlow { 0% { text-shadow: 0 0 5px #fff; } 50% { text-shadow: 0 0 10px #ffd700; } 100% { text-shadow: 0 0 5px #fff; } }
 
 .actions { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
 
