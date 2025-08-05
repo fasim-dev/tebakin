@@ -20,10 +20,7 @@ body {
 /* Splash Screen */
 .splash {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   background: linear-gradient(to bottom right, #dc2743, #cc2366);
   display: flex;
   flex-direction: column;
@@ -36,26 +33,10 @@ body {
   opacity: 1;
   visibility: visible;
 }
-
-.splash.hide {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.splash-logo {
-  width: 120px;
-  margin-bottom: 1rem;
-}
-
-.splash-title {
-  font-size: 1.8rem;
-  margin: 0;
-}
-
-.splash-sub {
-  font-size: 1rem;
-  margin-top: 0.5rem;
-}
+.splash.hide { opacity: 0; visibility: hidden; }
+.splash-logo { width: 120px; margin-bottom: 1rem; }
+.splash-title { font-size: 1.8rem; margin: 0; }
+.splash-sub { font-size: 1rem; margin-top: 0.5rem; }
 
 .game-container {
   max-width: 480px;
@@ -72,7 +53,6 @@ header {
   margin-bottom: 1rem;
   box-shadow: 0 3px 10px rgba(0,0,0,0.2);
 }
-
 header h1 {
   font-size: 1.7rem;
   margin: 0;
@@ -80,11 +60,7 @@ header h1 {
   text-shadow: 2px 2px #000;
   font-weight: 700;
 }
-
-.threeD {
-  color: #ffd700;
-  font-weight: bold;
-}
+.threeD { color: #ffd700; font-weight: bold; }
 
 .toggles {
   display: flex;
@@ -92,7 +68,6 @@ header h1 {
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
-
 .toggles button {
   background: rgba(255, 255, 255, 0.2);
   color: #fff;
@@ -103,15 +78,12 @@ header h1 {
   font-size: 0.75rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
 .toggles button:active {
   transform: scale(0.95);
   box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
 }
 
-main {
-  text-align: center;
-}
+main { text-align: center; }
 
 .image-3d img {
   width: 80%;
@@ -121,11 +93,7 @@ main {
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
   transition: filter 0.3s ease, transform 0.3s ease;
 }
-
-/* Blur effect */
-.blur {
-  filter: blur(10px);
-}
+.blur { filter: blur(10px); }
 
 #text-input-area {
   display: flex;
@@ -133,7 +101,6 @@ main {
   gap: 0.5rem;
   margin-bottom: 0.5rem;
 }
-
 #answer-input {
   flex: 1;
   padding: 0.6rem;
@@ -142,7 +109,6 @@ main {
   border: none;
   font-family: 'Orbitron', sans-serif;
 }
-
 #submit-answer {
   background: #fff;
   color: #dc2743;
@@ -153,15 +119,9 @@ main {
   cursor: pointer;
   transition: transform 0.2s ease;
 }
+#submit-answer:active { transform: scale(0.95); }
 
-#submit-answer:active {
-  transform: scale(0.95);
-}
-
-#clue-container {
-  margin-bottom: 0.3rem;
-}
-
+#clue-container { margin-bottom: 0.3rem; }
 #clue-text {
   font-size: 0.9rem;
   background: rgba(255, 255, 255, 0.2);
@@ -177,7 +137,6 @@ main {
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
-
 .options button {
   padding: 0.5rem 1rem;
   background: #fff;
@@ -189,10 +148,7 @@ main {
   cursor: pointer;
   transition: transform 0.2s ease;
 }
-
-.options button:active {
-  transform: scale(0.95);
-}
+.options button:active { transform: scale(0.95); }
 
 .status-bar.single-line {
   display: flex;
@@ -211,10 +167,7 @@ main {
   margin-bottom: 1rem;
   text-shadow: 0 0 4px #fff;
 }
-
-.status-bar.single-line b {
-  margin: 0 0.25rem 0 0.1rem;
-}
+.status-bar.single-line b { margin: 0 0.25rem 0 0.1rem; }
 
 .actions {
   display: flex;
@@ -222,7 +175,6 @@ main {
   gap: 1rem;
   margin-bottom: 1rem;
 }
-
 .actions button {
   padding: 0.6rem 1rem;
   border: none;
@@ -234,10 +186,7 @@ main {
   cursor: pointer;
   transition: transform 0.2s ease;
 }
-
-.actions button:active {
-  transform: scale(0.95);
-}
+.actions button:active { transform: scale(0.95); }
 
 .leaderboard, .badges, .stats {
   background: rgba(0, 0, 0, 0.3);
@@ -245,21 +194,68 @@ main {
   border-radius: 1rem;
   margin-top: 1rem;
 }
+.leaderboard h2, .badges h2, .stats h2 { margin-bottom: 0.5rem; }
+.badge-icon { width: 40px; margin: 0.25rem; }
 
-.leaderboard h2, .badges h2, .stats h2 {
-  margin-bottom: 0.5rem;
+/* Leaderboard Online */
+.leaderboard.online {
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+  margin-top: 1rem;
+  animation: pulseBorder 3s infinite ease-in-out;
+}
+#online-leaderboard {
+  font-size: 0.85rem;
+  background: rgba(255,255,255,0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  margin-top: 0.5rem;
+  text-align: left;
+  max-height: 220px;
+  overflow-y: auto;
+  box-shadow: inset 0 0 5px rgba(255,255,255,0.2);
+}
+#online-leaderboard ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#online-leaderboard li {
+  padding: 0.3rem 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  color: #fff;
+}
+#online-leaderboard li b { color: #ffd700; }
+
+@keyframes pulseBorder {
+  0% { border-color: rgba(255, 255, 255, 0.4); }
+  50% { border-color: rgba(255, 255, 255, 0.2); }
+  100% { border-color: rgba(255, 255, 255, 0.4); }
 }
 
-.badge-icon {
-  width: 40px;
-  margin: 0.25rem;
+/* Tombol Share Skor */
+#share-score-btn {
+  background: rgba(0, 255, 255, 0.2);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+#share-score-btn:active {
+  transform: scale(0.95);
+  box-shadow: inset 0 0 5px rgba(0,255,255,0.4);
 }
 
-/* POPUP Updated */
+/* POPUP */
 .popup {
   position: fixed;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   background: rgba(0, 0, 0, 0.7);
   color: #fff;
@@ -272,22 +268,12 @@ main {
   text-align: center;
   animation: popIn 0.3s ease-in-out;
   backdrop-filter: blur(8px);
-  font-family: 'Orbitron', sans-serif;
 }
-
 @keyframes popIn {
   0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
   100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 }
-
-.popup-content {
-  text-align: center;
-}
-
-.popup.hidden {
-  display: none;
-}
-
+.popup.hidden { display: none; }
 #popup-close {
   background: #fff;
   color: #dc2743;
@@ -299,10 +285,7 @@ main {
   cursor: pointer;
   transition: transform 0.2s ease;
 }
-
-#popup-close:active {
-  transform: scale(0.95);
-}
+#popup-close:active { transform: scale(0.95); }
 
 footer {
   text-align: center;
@@ -313,15 +296,10 @@ footer {
   border-radius: 1rem 1rem 0 0;
   color: #fff;
   text-shadow: 1px 1px #000;
-  font-family: 'Orbitron', sans-serif;
 }
-
 .main-nav a {
   color: #fff;
   text-decoration: none;
   margin: 0 0.25rem;
 }
-
-.main-nav a:hover {
-  text-decoration: underline;
-}
+.main-nav a:hover { text-decoration: underline; }
