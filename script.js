@@ -126,7 +126,7 @@ nextBtn.addEventListener("click", () => {
   showQuestion();
 });
 
-// Toggle Sound//
+// Toggle Sound
 document.getElementById("toggle-sound").addEventListener("click", () => {
   const toggle = !bgm.muted;
   bgm.muted = toggle;
