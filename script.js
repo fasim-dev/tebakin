@@ -23,7 +23,7 @@ const audioCorrect = document.getElementById("audio-correct");
 const audioPopup = document.getElementById("audio-popup");
 const audioTimer = document.getElementById("audio-timer");
 const audioLevelup = document.getElementById("audio-levelup");
-const bgm = document.getElementById("audio-bgm");
+const bgm = document.getElementById("bgm");
 
 const clueText = document.getElementById("clue");
 const optionsContainer = document.getElementById("options");
