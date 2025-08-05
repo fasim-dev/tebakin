@@ -14,6 +14,8 @@ const popup = document.getElementById("popup");
 const popupText = document.getElementById("popup-text");
 const popupClose = document.getElementById("popup-close");
 const splashScreen = document.getElementById("splash-screen");
+const onlineLeaderboard = document.getElementById("online-leaderboard");
+const shareBtn = document.getElementById("share-score-btn"); // ✅ Tambahan tombol share
 
 // AUDIO
 const audioClick = document.getElementById("audio-click");
@@ -33,22 +35,26 @@ let lives = 3;
 let timer = 15;
 let coins = 0;
 let timerInterval;
-
-// START MUSIC on first interaction (fix autoplay)
-document.addEventListener('click', () => {
-  if (bgm.paused) {
-    bgm.volume = 0.3;
-    bgm.play().catch(err => console.warn("Autoplay blocked", err));
-  }
-}, { once: true });
+let hintShown = false;
+const API_URL = "https://api.jsonbin.io/v3/b/68919fe3ae596e708fc1e0ba";
+const API_KEY = "$2a$10$3GsWlEiH9nWulr/R44duCOQNbhSvZSBoGxEbMZTiuCUujMfUsbcgK";
 
 // SPLASH SCREEN
 window.addEventListener("load", () => {
   setTimeout(() => {
     splashScreen.classList.remove("show");
     splashScreen.style.display = "none";
+    loadOnlineLeaderboard(); // leaderboard dimuat setelah splash
   }, 3000);
 });
+
+// AUDIO AUTOPLAY FIX
+document.addEventListener("click", () => {
+  if (bgm.paused) {
+    bgm.volume = 0.4;
+    bgm.play().catch(err => console.warn("BGM autoplay blocked:", err));
+  }
+}, { once: true });
 
 // LOAD SOAL
 fetch("soal.json")
@@ -59,22 +65,24 @@ fetch("soal.json")
     startTimer();
   })
   .catch(err => {
-    showPopup("Gagal memuat soal!");
-    console.error(err);
+    console.error("Gagal load soal:", err);
+    showPopup("⚠️ Soal tidak ditemukan!");
   });
 
 function showQuestion() {
   const question = questions[currentLevel][currentQuestionIndex];
   imageElement.src = question.image;
-  clueText.textContent = "-";
-  answerInput.value = "";
   imageElement.classList.add("blur");
+  answerInput.value = "";
+  clueText.textContent = "-";
   timer = 15;
-  timerText.textContent = timer;
   livesText.textContent = lives;
   levelText.textContent = currentLevel + 1;
   scoreText.textContent = score;
   coinsText.textContent = coins;
+  timerText.textContent = timer;
+  nextBtn.disabled = true;
+  hintShown = false;
 }
 
 function startTimer() {
@@ -92,18 +100,17 @@ function startTimer() {
 
 function checkAnswer() {
   const userAnswer = answerInput.value.trim().toLowerCase();
-  const correct = questions[currentLevel][currentQuestionIndex].answer.toLowerCase();
+  const correctAnswer = questions[currentLevel][currentQuestionIndex].answer.toLowerCase();
 
-  if (userAnswer === correct) {
-    imageElement.classList.remove("blur");
+  if (userAnswer === correctAnswer) {
     audioCorrect.play();
+    imageElement.classList.remove("blur");
     score += 10;
     coins += 5;
-    scoreText.textContent = score;
-    coinsText.textContent = coins;
+    updateStats();
     showPopup("🎉 Benar! " + questions[currentLevel][currentQuestionIndex].fact);
-    nextBtn.disabled = false;
     clearInterval(timerInterval);
+    nextBtn.disabled = false;
   } else {
     audioWrong.play();
     showPopup("❌ Jawaban salah!");
@@ -113,9 +120,10 @@ function checkAnswer() {
 
 function loseLife() {
   lives--;
-  livesText.textContent = lives;
+  updateStats();
   if (lives <= 0) {
     showPopup("💀 Game Over! Skor kamu: " + score);
+    sendScoreToLeaderboard();
     resetGame();
   } else {
     nextBtn.disabled = false;
@@ -127,25 +135,30 @@ function nextQuestion() {
   if (currentQuestionIndex >= questions[currentLevel].length) {
     currentLevel++;
     currentQuestionIndex = 0;
-    audioLevelup.play();
-    showPopup("🔥 Level Naik!");
     if (currentLevel >= questions.length) {
-      showPopup("🏁 Kamu sudah menyelesaikan semua level!");
+      showPopup("🏁 Semua level selesai! Skor akhir: " + score);
+      sendScoreToLeaderboard();
       return;
     }
+    audioLevelup.play();
+    showPopup("🔥 Level Naik ke " + (currentLevel + 1));
   }
   showQuestion();
   startTimer();
-  nextBtn.disabled = true;
 }
 
 function showHint() {
+  if (hintShown) {
+    showPopup("⚠️ Hint sudah ditampilkan!");
+    return;
+  }
   const hints = questions[currentLevel][currentQuestionIndex].hints;
-  const hintIndex = Math.floor(Math.random() * hints.length);
-  clueText.textContent = hints[hintIndex];
+  const hint = hints[Math.floor(Math.random() * hints.length)];
+  clueText.textContent = hint;
   score = Math.max(0, score - 2);
-  scoreText.textContent = score;
+  updateStats();
   audioPopup.play();
+  hintShown = true;
 }
 
 function showPopup(message) {
@@ -164,6 +177,85 @@ function resetGame() {
   startTimer();
 }
 
+function updateStats() {
+  scoreText.textContent = score;
+  livesText.textContent = lives;
+  coinsText.textContent = coins;
+}
+
+// ✅ LOAD LEADERBOARD ONLINE
+function loadOnlineLeaderboard() {
+  fetch(`${API_URL}/latest`, {
+    headers: { 'X-Master-Key': API_KEY }
+  })
+    .then(res => res.json())
+    .then(data => {
+      const list = data.record || [];
+      let html = "<ul>";
+      list.slice(0, 10).forEach((user, i) => {
+        html += `<li>#${i + 1} <b>${user.name}</b> - ${user.score}</li>`;
+      });
+      html += "</ul>";
+      onlineLeaderboard.innerHTML = html;
+    })
+    .catch(err => {
+      console.error("Leaderboard gagal dimuat:", err);
+      onlineLeaderboard.innerHTML = "<p>Leaderboard tidak tersedia.</p>";
+    });
+}
+
+// ✅ KIRIM SKOR KE JSONBIN.IO
+function sendScoreToLeaderboard() {
+  const playerName = prompt("Nama kamu:");
+  if (!playerName) return;
+
+  fetch(`${API_URL}/latest`, {
+    headers: { 'X-Master-Key': API_KEY }
+  })
+    .then(res => res.json())
+    .then(data => {
+      const list = data.record || [];
+      list.push({ name: playerName, score });
+      list.sort((a, b) => b.score - a.score);
+      if (list.length > 10) list.length = 10;
+
+      return fetch(API_URL, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Master-Key': API_KEY
+        },
+        body: JSON.stringify(list)
+      });
+    })
+    .then(() => loadOnlineLeaderboard())
+    .catch(err => console.error("Gagal simpan skor:", err));
+}
+
+// ✅ SHARE SKOR
+shareBtn.addEventListener("click", async () => {
+  audioClick.play();
+  const text = `Aku main Tebakin 3D dan skorku ${score}! Yuk coba juga gamenya!`;
+  const url = window.location.href;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: 'Tebakin 3D',
+        text,
+        url
+      });
+    } catch (err) {
+      console.error("Share dibatalkan:", err);
+    }
+  } else {
+    navigator.clipboard.writeText(`${text} ${url}`)
+      .then(() => showPopup("✅ Link skor disalin ke clipboard!"))
+      .catch(() => showPopup("❌ Gagal menyalin skor."));
+  }
+});
+
+// EVENTS
 popupClose.addEventListener("click", () => {
   popup.classList.add("hidden");
 });
