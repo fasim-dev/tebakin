@@ -32,67 +32,68 @@
 
     <!-- Main Game UI -->
     <main>
-  <div class="image-3d">
-    <img id="game-image" src="" alt="Gambar Soal" class="blur" />
-  </div>
+      <div class="image-3d">
+        <img id="game-image" src="" alt="Gambar Soal" class="blur" />
+      </div>
 
-  <div id="text-input-area">
-    <input type="text" id="answer-input" placeholder="Ketik jawaban..." />
-    <button id="submit-answer">Jawab</button>
-  </div>
+      <div id="text-input-area">
+        <input type="text" id="answer-input" placeholder="Ketik jawaban..." />
+        <button id="submit-answer">Jawab</button>
+      </div>
 
-  <!-- Clue -->
-  <div id="clue-container">
-    <p id="clue-text">💡 Petunjuk: <span id="clue">-</span></p>
-  </div>
+      <!-- Clue -->
+      <div id="clue-container">
+        <p id="clue-text">💡 Petunjuk: <span id="clue">-</span></p>
+      </div>
 
-  <!-- Jawaban pilihan (opsional) -->
-  <div class="options" id="options"></div>
+      <!-- Jawaban pilihan (opsional) -->
+      <div class="options" id="options"></div>
 
-  <!-- Status bar -->
-  <div class="status-bar single-line">
-    ❤️ <b id="lives">3</b>
-    ⏱️ <b id="timer">15</b> detik
-    🏅 Level: <b id="level">1</b>
-    💯 Skor: <b id="score">0</b>
-    🪙 Koin: <b id="coins">0</b>
-  </div>
+      <!-- Status bar -->
+      <div class="status-bar single-line">
+        ❤️ <b id="lives">3</b>
+        ⏱️ <b id="timer">15</b> detik
+        🏅 Level: <b id="level">1</b>
+        💯 Skor: <b id="score">0</b>
+        🪙 Koin: <b id="coins">0</b>
+      </div>
 
-  <!-- Action buttons -->
-  <div class="actions">
-    <button id="hint">💡 Hint</button>
-    <button id="next">➡️ Lanjut</button>
-  </div>
-      
-<!-- 🔴 Online Leaderboard (DIPINDAHKAN KE ATAS) -->
-  <div class="leaderboard online">
-    <h2>🌐 Online Leaderboard</h2>
-    <div id="online-leaderboard">Memuat data leaderboard...</div>
-  </div>
+      <!-- Action buttons -->
+      <div class="actions">
+        <button id="hint">💡 Hint</button>
+        <button id="next">➡️ Lanjut</button>
+      </div>
 
-  <!-- 🏆 Papan Skor Lokal -->
-  <div class="leaderboard">
-    <h2>🏆 Papan Skor</h2>
-    <p>Skor Tertinggi: <b id="highscore">0</b></p>
-    <p>Total Bermain: <span id="totalPlayed">0</span></p>
-    <p>Akurasi: <span id="accuracy">0</span>%</p>
-  </div>
+      <!-- 🔴 Online Leaderboard (DIPINDAHKAN KE ATAS) -->
+      <div class="leaderboard online">
+        <h2>🌐 Online Leaderboard</h2>
+        <div id="online-leaderboard">Memuat data leaderboard...</div>
+      </div>
 
-  <!-- Badge -->
-  <div class="badges">
-    <h2>🎖 Badge Pencapaian</h2>
-    <div id="badge-list"></div>
-  </div>
+      <!-- 🏆 Papan Skor Lokal -->
+      <div class="leaderboard">
+        <h2>🏆 Papan Skor</h2>
+        <p>Skor Tertinggi: <b id="highscore">0</b></p>
+        <p>Total Bermain: <span id="totalPlayed">0</span></p>
+        <p>Akurasi: <span id="accuracy">0</span>%</p>
+      </div>
 
-  <!-- Statistik -->
-  <div class="stats">
-    <h2>📊 Statistik Kamu</h2>
-    <p>Total Main: <span id="stat-played">0</span></p>
-    <p>Benar: <span id="stat-correct">0</span></p>
-    <p>Salah: <span id="stat-wrong">0</span></p>
-    <p>Akurasi: <span id="stat-accuracy">0</span>%</p>
-  </div>
-</main>
+      <!-- Badge -->
+      <div class="badges">
+        <h2>🎖 Badge Pencapaian</h2>
+        <div id="badge-list"></div>
+      </div>
+
+      <!-- Statistik -->
+      <div class="stats">
+        <h2>📊 Statistik Kamu</h2>
+        <p>Total Main: <span id="stat-played">0</span></p>
+        <p>Benar: <span id="stat-correct">0</span></p>
+        <p>Salah: <span id="stat-wrong">0</span></p>
+        <p>Akurasi: <span id="stat-accuracy">0</span>%</p>
+      </div>
+    </main>
+
     <!-- Popup -->
     <div id="popup" class="popup hidden">
       <div class="popup-content">
