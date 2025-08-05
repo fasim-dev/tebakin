@@ -119,6 +119,12 @@ main {
   margin-bottom: 1rem;
   border-radius: 1.5rem;
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+/* Blur effect */
+.blur {
+  filter: blur(10px);
 }
 
 #text-input-area {
@@ -249,7 +255,7 @@ main {
   margin: 0.25rem;
 }
 
-/* POPUP Updated to match leaderboard style */
+/* POPUP Updated */
 .popup {
   position: fixed;
   top: 50%;
