@@ -103,7 +103,7 @@ hintBtn.addEventListener("click", () => {
   currentHintIndex++;
   const hints = questions[currentLevel][currentQuestionIndex].hints;
   if (currentHintIndex < hints.length) {
-    clueText.textContent = "💡 " + hints[currentHintIndex];
+    clueText.textContent = " " + hints[currentHintIndex];
   } else {
     clueText.textContent = "💡 Semua hint sudah ditampilkan.";
   }
@@ -126,7 +126,7 @@ nextBtn.addEventListener("click", () => {
   showQuestion();
 });
 
-// Toggle Sound//
+// Toggle Sound
 document.getElementById("toggle-sound").addEventListener("click", () => {
   const toggle = !bgm.muted;
   bgm.muted = toggle;
