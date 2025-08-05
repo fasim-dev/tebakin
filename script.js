@@ -105,7 +105,7 @@ hintBtn.addEventListener("click", () => {
   if (currentHintIndex < hints.length) {
     clueText.textContent = " " + hints[currentHintIndex];
   } else {
-    clueText.textContent = "💡 Semua hint sudah ditampilkan.";
+    clueText.textContent = "Semua hint sudah ditampilkan.";
   }
   updateStats();
 });
